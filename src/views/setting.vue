@@ -33,10 +33,12 @@ export default {
     return { accept: ".xlsx,.xls", tableData: JSON.parse(localStorage.getItem("list") || "[]") };
   },
   methods: {
-    save() {
+    async save() {
       let json = JSON.stringify(this.tableData);
       window.localStorage.setItem("list", json);
-      this.$router.push("/");
+      if (!this.tableData.length && (await this.$confirm("添加了0个人，确定离开？", "提示！", { type: "warning" }))) {
+        this.$router.push("/");
+      }
     },
     async uploadFile(file) {
       if (!/(\.xlsx|\.xls)$/g.test(file.name)) {
