@@ -42,8 +42,13 @@ export default {
     };
   },
   methods: {
-    start() {
-      if (this.list) return this.$message.error("无参与抽奖的人员");
+    async start() {
+      if (!this.list.length) {
+        if (await this.$confirm("无参与抽奖的人员,是否去添加？", "提示！", { type: "warning" })) {
+          this.$router.push("/setting");
+        }
+        return;
+      }
       if (this.status) return this.stop();
       this.tan();
       this.status = true;
