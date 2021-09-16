@@ -88,6 +88,7 @@ export default {
       localStorage.setItem("draw", JSON.stringify(list.concat(arr)));
     },
     tan() {
+      clearTimeout(this.tanTimer);
       let arr = new Array(10).fill().map(() => {
         let index = this.random(0, this.list.length);
         let name = this.re(this.list[index]?.name || "", 1, 2);
