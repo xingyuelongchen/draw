@@ -6,6 +6,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   mode: 'history',
   routes: [
+    { path: '/canvas', component: () => import('@/views/canvas.vue') },
     { path: '/setting', component: () => import('@/views/setting.vue') },
     { path: '/*', component: () => import('@/views/index.vue') },
   ]

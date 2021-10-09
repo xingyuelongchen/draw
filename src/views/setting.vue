@@ -17,14 +17,21 @@ Date  : 2021-09-15
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div class="el-upload__tip">只允许（{{accept}}）表格文件</div>
         </el-upload>
-        <mixForm class="mix-form" ref="form" v-model="formData" :fields="formFields" :rules="rules" />
+        <el-form ref="form" :model="formData" :rules="rules">
+          <el-form-item v-for="item in formFields" v-bind="item" :key="item.prop">
+            <el-input v-model="formData[item.prop]"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="add" type="primary">添加</el-button>
+          </el-form-item>
+        </el-form>
       </el-card>
       <el-card style="flex:1 1 auto;margin-left:20px">
         <div slot="header">
           <span>参与抽奖人员列表</span>
           <el-button @click="to" size="mini" type="success" style="float:right">去抽奖</el-button>
         </div>
-        <el-table :data="tableData" border height="500px" stripe>
+        <el-table :data="tableData" border max-height="100vh" stripe>
           <el-table-column label="姓名" prop="name" />
           <el-table-column label="手机号" prop="phone" />
           <el-table-column>
@@ -61,8 +68,7 @@ export default {
       formData: {},
       formFields: [
         { label: "姓名", prop: "name" },
-        { label: "手机号", prop: "phone", maxLength: 11 },
-        { label: "添加", k: "button", click: this.add }
+        { label: "手机号", prop: "phone", maxLength: 11 }
       ],
       rules: {
         name: { required: true, pattern: /^[\u4e00-\u9fa5]{2,10}$/, message: "请输入正确的姓名", trigger: ["blur"] },
