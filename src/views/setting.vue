@@ -29,9 +29,10 @@ Date  : 2021-09-15
       <el-card style="flex:1 1 auto;margin-left:20px">
         <div slot="header">
           <span>参与抽奖人员列表</span>
+          <el-button @click="clear" size="mini" type="success" style="float:right">清空数据</el-button>
           <el-button @click="to" size="mini" type="success" style="float:right">去抽奖</el-button>
         </div>
-        <el-table :data="tableData" border max-height="100vh" stripe>
+        <el-table :data="tableData" border height="800px" stripe>
           <el-table-column label="姓名" prop="name" />
           <el-table-column label="手机号" prop="phone" />
           <el-table-column>
@@ -110,6 +111,11 @@ export default {
     save() {
       let json = JSON.stringify(this.tableData);
       window.localStorage.setItem("list", json);
+    },
+    clear() {
+      this.tableData = [];
+      this.tableDraw = [];
+      localStorage.clear();
     },
     async to() {
       if (this.tableData.length) this.$router.push("/");
